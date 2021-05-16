@@ -11,15 +11,17 @@ function getplots(id) {
     
     console.log(data);
    //selecting the values
-    var sampleValues = data.samples[0].sample_values.slice(0,10);
-    console.log(sampleValues);
-    var otuIds = data.samples[0].otu_ids;
+    var sampleValues = data.samples[0].sample_values;
+    var sampleValuesVer = data.samples[0].sample_values.slice(0,10);
+    console.log(sampleValuesVer);
+    var otuIdss = data.samples[0].otu_ids;
+    console.log(otuIdss);
     var otuLables = data.samples[0].otu_labels;
     //var sampleValuess = unpack(data.samples.sample_values,3);
       
     //Top 10 
     var topTen = data.samples[0].sample_values.slice(0,10).sort((a,b) =>a-b);
-    var otuTenIds = data.samples[0].otu_ids.slice(0,10);
+    var otuTenIds = data.samples[0].otu_ids.slice(0,10).reverse();
     var topTenLa = data.samples[0].otu_labels.slice(0,10);
 
     //formating ticker and label 
@@ -42,11 +44,36 @@ function getplots(id) {
         tickmode:"linear",}
 
       };
-      var data = [Hgraph];
-      Plotly.newPlot('bar', data, layout);
+      var data0 = [Hgraph];
+      Plotly.newPlot('bar', data0, layout);
+  
+
+    var Cgraph =
+    {
+      x: otuIdss,
+      y: sampleValues,
+      mode: "markers",
+      marker: {
+        size: sampleValues,
+        color: otuIdss
+      },
+      text: otuLables
+
+    };
+    
+
+    var layout1 = {
+      xaxis : { title: "Samples" },
+     
+      height: 600,
+      width: 1200
+
+    };
+
+    var data1 = [Cgraph];
+    Plotly.newPlot('bubble', data1, layout1);
+
   });
-
-
 }
 
 getplots();
