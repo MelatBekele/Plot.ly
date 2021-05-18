@@ -16,8 +16,7 @@ function heatplots(id) {
             title: { text: "Belly Button Washing Frequency"},
             type: "indicator",
             mode: "gauge+number+delta",
-            delta: { reference: 2 },   
-            
+            delta: { reference: 2 }, 
             gauge: {
                 axis: {
                   range: [0, 10],
