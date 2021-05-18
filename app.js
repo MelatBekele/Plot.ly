@@ -4,6 +4,10 @@
 //   });
 
 // }
+/** 
+* @param {array} 
+* @param {argum}
+*/
 
 function getplots(id) {
 
@@ -76,7 +80,7 @@ function getplots(id) {
   });
 }
 
-getplots();
+getplots("941");
 
 
 //Display the sample metadata, i.e., an individual's demographic information.
@@ -91,19 +95,33 @@ function smpMetadata (id) {
     var filtermeta = medata.metadata.filter(datacpy => datacpy.id.toString() === id)[0];
     console.log(filtermeta);
 
-    var demographics = d3.select("#sample-metadata");
-    console.log(demographics);
+    var infodemographics = d3.select("#sample-metadata");
+    console.log(infodemographics);
 
-    d3.select("#sample-metadata").node().value = "";
- 
+    //d3.event.preventDefault();
 
-    Object.entries(filtermeta).forEach((key) => {   
-      demographics.append("selDataset");    
-     });
+    //d3.select("#sample-metadata").node().value = "";
+
+    Object.entries(filtermeta).forEach((demo) => {   
+      infodemographics
+      .append()
+      .text(demo[0].toUpperCase()+ ":" + demo[1] + "\n");    
+      });
   });
 }
 
-//function connection(){
-//getplots();
 smpMetadata("941");
-//}
+
+// function connection(){
+//   getplots();
+//   smpMetadata();
+// };
+
+//selecting a value from the drop down 
+function smpMetadata (id) {
+  
+  d3.json('samples.json').then(function(seldata) {
+    console.log(seldata);
+  });
+
+}
