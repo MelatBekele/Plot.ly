@@ -80,23 +80,20 @@ function getplots(id) {
   });
 }
 
-getplots("941");
+//getplots();
 
 
 //Display the sample metadata, i.e., an individual's demographic information.
 function smpMetadata (id) {
   
   d3.json('samples.json').then(function(medata) {
-    console.log(medata);
-    
-    //var metaValues = medata.metadata;
-    //console.log(metaValues);
+    //console.log(medata);
 
     var filtermeta = medata.metadata.filter(datacpy => datacpy.id.toString() === id)[0];
-    console.log(filtermeta);
+    //console.log(filtermeta);
 
     var infodemographics = d3.select("#sample-metadata");
-    console.log(infodemographics);
+    //console.log(infodemographics);
 
     //d3.event.preventDefault();
 
@@ -110,18 +107,27 @@ function smpMetadata (id) {
   });
 }
 
-smpMetadata("941");
+//smpMetadata();
 
-// function connection(){
-//   getplots();
-//   smpMetadata();
-// };
+function connection(){
+   getplots();
+  smpMetadata();
+};
 
 //selecting a value from the drop down 
 function smpMetadata (id) {
-  
+
   d3.json('samples.json').then(function(seldata) {
     console.log(seldata);
+    
+  //var namesec = seldata.names;
+   //console.log (namesec);
+
+  seldata.names.forEach((name) => {
+    d3.select("#selDataset").append("option").text(name).property("value");
+  });
+
+
   });
 
 }
