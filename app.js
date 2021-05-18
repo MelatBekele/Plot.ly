@@ -13,18 +13,20 @@ function getplots(id) {
     
    // console.log(data);
    //selecting the values
-    var sampleValues = data.samples[0].sample_values;
-    var sampleValuesVer = data.samples[0].sample_values.slice(0,10);
+    var sampleValuesId =  data.samples.filter(datacpy => datacpy.id.toString() === id)[0];
+
+    var sampleValues = sampleValuesId.sample_values;
+    //var sampleValuesVer = data.samples[0].sample_values.slice(0,10);
     //console.log(sampleValuesVer);
-    var otuIdss = data.samples[0].otu_ids;
+    var otuIdss = sampleValuesId.otu_ids;
     //console.log(otuIdss);
-    var otuLables = data.samples[0].otu_labels;
+    var otuLables = sampleValuesId.otu_labels;
     //var sampleValuess = unpack(data.samples.sample_values,3);
       
     //Top 10 
-    var topTen = data.samples[0].sample_values.slice(0,10).sort((a,b) =>a-b);
-    var otuTenIds = data.samples[0].otu_ids.slice(0,10).reverse();
-    var topTenLa = data.samples[0].otu_labels.slice(0,10);
+    var topTen = sampleValuesId.sample_values.slice(0,10).sort((a,b) =>a-b);
+    var otuTenIds = sampleValuesId.otu_ids.slice(0,10).reverse();
+    var topTenLa = sampleValuesId.otu_labels.slice(0,10);
 
     //formating ticker and label 
     var topTenMap = otuTenIds.map(eachten => "OTU " + eachten);
@@ -87,6 +89,9 @@ function smpMetadata (id) {
   d3.json('samples.json').then(function(medata) {
     //console.log(medata);
 
+   //var metadata = medata.metadata;
+   //console.log (metadata);
+
     var filtermeta = medata.metadata.filter(datacpy => datacpy.id.toString() === id)[0];
     //console.log(filtermeta);
 
@@ -111,23 +116,30 @@ function smpMetadata (id) {
 function optionChanged(id){
    getplots(id);
    smpMetadata(id);
+   heatplots(id);
 };
 
 //selecting a value from the drop down 
 function slection() {
 
   d3.json('samples.json').then(function(seldata) {
-    console.log(seldata);
+    //console.log(seldata);
     
-  //var namesec = seldata.names;
+  var namesec = seldata.names;
+  var nameselect = d3.select("#selDataset");
    //console.log (namesec);
 
-  seldata.names.forEach((namename) => {
-    d3.select("#selDataset").append("option").text(namename).property("value");
-  });
+   namesec.forEach((namename) => {
+    nameselect
+    .append("option")
+    .text(namename)
+    .property("value")
+    //.att()
+    });
 
   getplots(seldata.names[0]);
   smpMetadata(seldata.names[0]);
+  heatplots(seldata.names[0]);
 
   });
 
