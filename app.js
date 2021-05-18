@@ -4,9 +4,7 @@
 //   });
 
 // }
-/** 
-* @param {array} 
-* @param {argum}
+/** @param {array} @param {argum}
 */
 
 function getplots(id) {
@@ -29,7 +27,7 @@ function getplots(id) {
     var topTenLa = data.samples[0].otu_labels.slice(0,10);
 
     //formating ticker and label 
-    var topTenMap = otuTenIds.map(d => "OTU " + d);
+    var topTenMap = otuTenIds.map(eachten => "OTU " + eachten);
     //console.log(topTenMap);
 
     
@@ -96,6 +94,7 @@ function smpMetadata (id) {
     //console.log(infodemographics);
 
     //d3.event.preventDefault();
+    infodemographics.html("");
 
     //d3.select("#sample-metadata").node().value = "";
 
@@ -109,13 +108,13 @@ function smpMetadata (id) {
 
 //smpMetadata();
 
-function connection(){
-   getplots();
-  smpMetadata();
+function optionChanged(id){
+   getplots(id);
+   smpMetadata(id);
 };
 
 //selecting a value from the drop down 
-function smpMetadata (id) {
+function slection() {
 
   d3.json('samples.json').then(function(seldata) {
     console.log(seldata);
@@ -123,11 +122,15 @@ function smpMetadata (id) {
   //var namesec = seldata.names;
    //console.log (namesec);
 
-  seldata.names.forEach((name) => {
-    d3.select("#selDataset").append("option").text(name).property("value");
+  seldata.names.forEach((namename) => {
+    d3.select("#selDataset").append("option").text(namename).property("value");
   });
 
+  getplots(seldata.names[0]);
+  smpMetadata(seldata.names[0]);
 
   });
 
 }
+
+slection();
