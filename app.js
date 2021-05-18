@@ -106,7 +106,7 @@ function smpMetadata (id) {
     Object.entries(filtermeta).forEach((demo) => {   
       infodemographics
       .append()
-      .text(demo[0].toUpperCase()+ ":" + demo[1] + "\n");    
+      .text(demo[0] + ":" + demo[1]+ "\n");    
       });
   });
 }
